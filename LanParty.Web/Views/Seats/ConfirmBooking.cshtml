@@ -1,0 +1,48 @@
+﻿@model LanParty.Core.Domain.Booking
+@{
+    ViewBag.Title = "BookingConfirmation";
+}
+
+<h2>Booking Confirmation</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Booking Code
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Seat.Id)
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd>
+            @Model.UserId
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Seat.Position)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Seat.Position)
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BookingDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BookingDate)
+        </dd>
+    </dl>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.ActionLink("ConfirmBooking", "ConfirmBooking", "Seats", new { bookingId = @Model.Id}, new { @class = "btn btn-primary" } )
+        </div>
+    </div>
+</div>

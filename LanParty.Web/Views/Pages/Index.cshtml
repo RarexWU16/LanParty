@@ -1,0 +1,14 @@
+﻿@model IEnumerable<LanParty.Core.Domain.Page>
+
+@{
+    ViewBag.Title = "Content List";
+}
+
+<table class="table">    
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.ActionLink(item.Title, "Page", new { title = item.Title })</td>
+        </tr>
+    }
+</table>

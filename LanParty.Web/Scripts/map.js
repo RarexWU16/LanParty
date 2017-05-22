@@ -1,0 +1,139 @@
+﻿$(function () {
+
+    // Canvas -------------------------
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    var canvasOffset = $(canvas).offset();
+    var offsetX = canvasOffset.left;
+    var offsetY = canvasOffset.top;
+    var canvasWidth = canvas.width;
+    var canvasHeight = canvas.height;
+    var isDragging = false;
+
+    // --------------------------------
+
+    function handleMouseDown(e) {
+        canMouseX = parseInt(e.clientX - offsetX);
+        canMouseY = parseInt(e.clientY - offsetY);
+        // set the drag flag
+        isDragging = true;
+    }
+
+    function handleMouseUp(e) {
+        canMouseX = parseInt(e.clientX - offsetX);
+        canMouseY = parseInt(e.clientY - offsetY);
+        // clear the drag flag
+        isDragging = false;
+    }
+
+    function handleMouseOut(e) {
+        canMouseX = parseInt(e.clientX - offsetX);
+        canMouseY = parseInt(e.clientY - offsetY);
+        // user has left the canvas, so clear the drag flag
+        // isDragging=false;
+    }
+
+    function handleMouseMove(e) {
+        canMouseX = parseInt(e.clientX - offsetX);
+        canMouseY = parseInt(e.clientY - offsetY);
+        // if the drag flag is set, clear the canvas and draw the image
+        if (isDragging) {
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+            ctx.fillRect(canMouseX - 0 / 2, canMouseY - 0 / 2, 20, 20);
+        }
+    }
+
+    // the main function
+    function getMousePos(canvas, e) {
+
+        // getBoundingClientRect is supported in most browsers and gives you
+        // the absolute geometry of an element
+        var rect = canvas.getBoundingClientRect();
+
+        // as mouse event coords are relative to document you need to
+        // subtract the element's left and top position:
+        return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    function drawSeats(seats) {
+        for (var seat = 0; seat < seats.length; seat++) {
+            console.log("position: " + seats[seat].position);
+            ctx.fillStyle = "red";
+            ctx.fillRect(seats[seat].positionX, seats[seat].positionY, 20, 20);
+        }
+
+    }
+
+    function getData(action) {
+        var url = "http://localhost:61382/api/";
+
+        var promise = new Promise(
+            function (resolve, reject) {
+                var xhr;
+
+                if (window.XMLHttpRequest) {
+                    xhr = new XMLHttpRequest();
+                } else {
+                    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                xhr.open("GET", url + action, true);
+                xhr.send();
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var results = JSON.parse(xhr.responseText);
+                        resolve(results); // resolve
+                        console.log(results);
+                    }
+                }
+
+                xhr.onerror = function () {
+                    reject(this.response); // reject
+                }
+
+            });
+
+        promise.then(
+        function (results) {
+            drawSeats(results);
+        })
+        .catch(
+        function (reason) {
+            console.log("Error: Something went wrong: " + reason);
+        });
+    };
+
+    // Events
+    $(canvas).on("click", function (e) {
+        //TODO
+    });
+
+    $(canvas).mousedown(function (e) {
+        handleMouseDown(e);
+        var pos = getMousePos(this, e), // provide this canvas and event
+            x = pos.x,
+            y = pos.y;
+
+
+        console.log("Klickat på: " + JSON.stringify(pos));
+    });
+    $(canvas).mousemove(function (e) { handleMouseMove(e); });
+    $(canvas).mouseup(function (e) {
+        handleMouseUp(e);
+        var pos = getMousePos(this, e), // provide this canvas and event
+            x = pos.x,
+            y = pos.y;
+
+        $("#PositionX").val(pos.x);
+        $("#PositionY").val(pos.y);
+
+        console.log("Släppt på: " + JSON.stringify(pos));
+    });
+    $(canvas).mouseout(function (e) { handleMouseOut(e); });
+
+
+    // RUN
+    getData("seats"); //TODO
+
+});

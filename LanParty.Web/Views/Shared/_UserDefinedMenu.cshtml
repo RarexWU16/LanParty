@@ -1,0 +1,6 @@
+﻿@model LanParty.Web.Models.DefaultLayoutViewModel
+
+@foreach (var item in Model.UserDefinedMenuItems)
+{
+    <li>@Html.ActionLink(item.Title, "Index", "Pages", new { contents = item.ContentType }, null)</li>
+}

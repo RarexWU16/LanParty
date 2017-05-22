@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<LanParty.Core.Domain.Seat>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Platser</h2>
+@if (Request.IsAuthenticated && (User.IsInRole("Crew") || User.IsInRole("Administrator")))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Position)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PositionX)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PositionY)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Reserved)
+            </th>*@
+        <th></th>
+        <th></th>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PositionX)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PositionY)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Reserved)
+                </td>*@
+            <td>
+                @{
+                    if (item.Reserved != true && User.IsInRole("User"))
+                    {
+                        @Html.ActionLink("Book", "Book", "Seats", new { seatId = item.Id }, null);
+                    }
+                    if (item.Reserved && User.IsInRole("Participant") && !User.IsInRole("Administrator") && item.UserId == User.Identity.GetUserId())
+                    {
+                        @Html.ActionLink("Request unbook", "Book", "Seats", new { seatId = item.Id }, null);
+                    }
+
+                    if (Request.IsAuthenticated && User.IsInRole("Administrator") && item.Reserved)
+                    {
+                        @Html.ActionLink("Unbook", "Unbook", "Seats", new { seatId = item.Id }, null);
+                    }
+
+                }
+            </td>
+            <td>
+                @if (item.Reserved && Request.IsAuthenticated && User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink(item.UserId, "Details", "UsersAdmin", new { id = item.UserId }, null)
+                }
+            </td>
+        </tr>
+                    }
+
+</table>

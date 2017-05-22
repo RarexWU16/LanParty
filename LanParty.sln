@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanParty.Web", "LanParty.Web\LanParty.Web.csproj", "{13AD18E1-9D50-4C1F-951C-8631BCE0FFED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanParty.Core", "LanParty.Core\LanParty.Core.csproj", "{255B6C4B-1253-4AB2-8C00-973551421C78}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13AD18E1-9D50-4C1F-951C-8631BCE0FFED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13AD18E1-9D50-4C1F-951C-8631BCE0FFED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13AD18E1-9D50-4C1F-951C-8631BCE0FFED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13AD18E1-9D50-4C1F-951C-8631BCE0FFED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{255B6C4B-1253-4AB2-8C00-973551421C78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{255B6C4B-1253-4AB2-8C00-973551421C78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{255B6C4B-1253-4AB2-8C00-973551421C78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{255B6C4B-1253-4AB2-8C00-973551421C78}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://andreasgidlund.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = LanParty.Core\\LanParty.Core.csproj
+		SccProjectName1 = LanParty.Core
+		SccLocalPath1 = LanParty.Core
+		SccProjectUniqueName2 = LanParty.Web\\LanParty.Web.csproj
+		SccProjectName2 = LanParty.Web
+		SccLocalPath2 = LanParty.Web
+	EndGlobalSection
+EndGlobal
