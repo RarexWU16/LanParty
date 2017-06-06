@@ -1,15 +1,15 @@
 ﻿@model LanParty.Core.Domain.Booking
 @{
-    ViewBag.Title = "BookingConfirmation";
+    ViewBag.Title = "Bekräfta bokning";
 }
 
-<h2>Booking Confirmation</h2>
+<h2>Bekräfta bokning</h2>
 
 <div>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Booking Code
+            Bokningsnummer
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Seat.Id)
@@ -20,7 +20,7 @@
             @Html.DisplayNameFor(model => model.User)
         </dt>
         <dd>
-            @Model.UserId
+            @Model.User.FirstName @Model.User.LastName (<span style="color: lightsalmon">@Model.UserId</span>)
         </dd>
     </dl>
     <dl class="dl-horizontal">
@@ -41,8 +41,9 @@
     </dl>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            @Html.ActionLink("ConfirmBooking", "ConfirmBooking", "Seats", new { bookingId = @Model.Id}, new { @class = "btn btn-primary" } )
+        <div class="col-md-offset-4 col-md-10">
+            @Html.ActionLink("Bekräfta", "ConfirmBooking", "Seats", new { bookingId = @Model.Id}, new { @class = "btn btn-primary" } )
         </div>
     </div>
+    <hr />
 </div>

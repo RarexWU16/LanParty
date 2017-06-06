@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace LanParty.Core.Domain
     public class Seat
     {
         public Guid Id { get; set; }
+        [Display(Name = "Plats")]
         public string Position { get; set; }
         public string PositionX { get; set; }
         public string PositionY { get; set; }

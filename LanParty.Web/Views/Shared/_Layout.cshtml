@@ -25,12 +25,14 @@
             background: linear-gradient(#ff7920, #cb5304);
             background-color: #ff7920;
         }
+
         .navbar-brand {
-            color: #fff!important;
+            color: #fff !important;
             font-family: 'Audiowide', cursive;
         }
+
         .navbar-inverse {
-            color: #fff!important;
+            color: #fff !important;
         }
 
         .navbar-nav > li > a {
@@ -64,8 +66,21 @@
                 background: -moz-linear-gradient(#cb5304, #ff7920);
                 background: linear-gradient(#cb5304, #ff7920);
             }
-            h1, h2, h3 {
-                font-family: 'Audiowide', cursive;
+
+        h1, h2, h3 {
+            font-family: 'Audiowide', cursive;
+        }
+
+        .slideshow {
+            height: 200px;
+            margin-bottom: 10px;
+        }
+
+            .slideshow img {
+                border-radius: 7px;
+                background-color: #fff;
+                padding-left: 10px;
+                padding-right: 10px;
             }
     </style>
     <div class="navbar navbar-inverse navbar-fixed-top" style="">
@@ -84,6 +99,8 @@
 
                     <li>@Html.ActionLink("Information", "About", "Default")</li>
                     <li>@Html.ActionLink("Kontakt", "Contact", "Default")</li>
+                    <li>@Html.ActionLink("Sponsorer", "Sponsors", "Default")</li>
+                    <li>@Html.ActionLink("Turneringar", "Tournaments", "Default")</li>
 
                     @if (Request.IsAuthenticated && (User.IsInRole("User") || User.IsInRole("Crew") || User.IsInRole("Participant")))
                     {
@@ -127,17 +144,16 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        
+
         <footer>
             <hr />
             <div class="row">
                 <div class="col-md-4">
-                    <h2>Features</h2>
-                    <p>
-                        Simple CRM gives you a powerful way to build dynamic websites that gives you
-                        full control over markup for enjoyable content management.
-                    </p>
-                    <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
+                    <h2>Sponsorer</h2>
+                    <div class="slideshow">
+                        @*<img class="slideshowimage img-responsive" src="~/Content/Images/Logos/byteshift.jpg" />*@
+                    </div>
+                    <p><a class="btn btn-default" href="/Default/Sponsors">Läs mer &raquo;</a></p>
                 </div>
                 <div class="col-md-4">
                     <h2>Lorem Ipsum</h2>
@@ -145,7 +161,7 @@
                         Simple CRM gives you a powerful way to build dynamic websites that gives you
                         full control over markup for enjoyable content management.
                     </p>
-                    <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
+                    <p><a class="btn btn-default" href="#">Läs mer &raquo;</a></p>
                 </div>
                 <div class="col-md-4">
                     <h2>@ViewBag.Title</h2>
@@ -153,15 +169,57 @@
                         Simple CRM gives you a powerful way to build dynamic websites that gives you
                         full control over markup for enjoyable content management.
                     </p>
-                    <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
+                    <p><a class="btn btn-default" href="#">Läs mer &raquo;</a></p>
                 </div>
             </div>
             <hr />
             <p>&copy; @DateTime.Now.Year - <i>MarknadsLAN2017</i></p>
         </footer>
     </div>
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            var images = new Array(
+                '/Content/Images/Logos/vmo.jpg',
+                '/Content/Images/Logos/elajo.jpg',
+                '/Content/Images/Logos/byteshift.jpg',
+                '/Content/Images/Logos/plastprint.jpg',
+                '/Content/Images/Logos/audiovideo.jpg',
+                '/Content/Images/Logos/smal.jpg'); //260x200
+            var nextimage = 0;
+
+            function doSlideshow() {
+                if ($('.slideshowimage').length != 0) {
+                    $('.slideshowimage').fadeOut(1500, function () {
+                        slideshowFadeIn();
+                        $(this).remove()
+                    });
+                }
+                else {
+                    slideshowFadeIn();
+                }
+            }
+            function slideshowFadeIn() {
+                $('.slideshow').prepend($('<img class="slideshowimage img-responsive" src="' + 
+                    images[randomImage(images.length)] + '" style="display:none">').fadeIn(1500, function () {
+                        setTimeout(doSlideshow, 1500);
+                    }));
+                if (nextimage >= images.length) {
+                    nextimage = 0;
+                }
+
+                function randomImage(imagesLength) {
+                    var min = 0;
+                    return Math.floor(Math.random() * (imagesLength - min) + min);
+                }
+                    
+            }
+            doSlideshow();
+        });
+    </script>
+
 </body>
 </html>

@@ -32,7 +32,7 @@ namespace LanParty.Web.Models
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "Remember this browser?")]
+        [Display(Name = "Kom ihåg denna datorn?")]
         public bool RememberBrowser { get; set; }
     }
 
@@ -52,21 +52,21 @@ namespace LanParty.Web.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Lösenord")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Kom ihåg mig?")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "First Name")]
+        [Display(Name = "Förnamn")]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Last Name")]
+        [Display(Name = "Efternamn")]
         public string LastName { get; set; }
 
         [Required]
@@ -77,21 +77,24 @@ namespace LanParty.Web.Models
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Lösenord")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Bekräfta lösenord")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         // Add the new address properties:
+        [Display(Name = "Adress")]
         public string Address { get; set; }
+        [Display(Name = "Stad")]
         public string City { get; set; }
+        [Display(Name = "Län")]
         public string State { get; set; }
 
         // Use a sensible display name for views:
-        [Display(Name = "Postal Code")]
+        [Display(Name = "Postnummer")]
         public string PostalCode { get; set; }
     }
 

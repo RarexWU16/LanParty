@@ -17,14 +17,26 @@ namespace LanParty.Web.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "...";
+    
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "...";
+           
+
+            return View();
+        }
+        public ActionResult Sponsors()
+        {
+            
+
+            return View();
+        }
+        public ActionResult Tournaments()
+        {
+  
 
             return View();
         }

@@ -70,9 +70,10 @@ namespace LanParty.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (userId != User.Identity.Name)
+                if (userId != User.Identity.GetUserId())
                 {
-                    return HttpNotFound(); // TODO No permission
+                    //return HttpNotFound(); // TODO No permission
+                    return RedirectToAction("Index", "Default");
                 }
 
                 var user = await UserManager.FindByIdAsync(userId);

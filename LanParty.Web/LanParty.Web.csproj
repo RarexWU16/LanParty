@@ -224,6 +224,12 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\background.png" />
+    <Content Include="Content\Images\Logos\audiovideo.jpg" />
+    <Content Include="Content\Images\Logos\byteshift.jpg" />
+    <Content Include="Content\Images\Logos\elajo.jpg" />
+    <Content Include="Content\Images\Logos\plastprint.jpg" />
+    <Content Include="Content\Images\Logos\smal.jpg" />
+    <Content Include="Content\Images\Logos\vmo.jpg" />
     <Content Include="Content\Images\piccontainer3.jpg" />
     <Content Include="Content\jquery.seat-charts.css" />
     <Content Include="favicon.ico" />
@@ -500,6 +506,8 @@
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.eot" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\readme.md" />
     <Content Include="Scripts\tinymce\langs\readme.md" />
+    <Content Include="Views\Default\Sponsors.cshtml" />
+    <Content Include="Views\Default\Tournaments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

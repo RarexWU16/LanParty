@@ -159,7 +159,7 @@ namespace LanParty.Web.Controllers
                     Email = model.Email,
                     Address = model.Address,
                     City = model.City,
-                    State = model.State,
+                    State = "Jonkoping",
                     PostalCode = model.PostalCode
                 };
 
