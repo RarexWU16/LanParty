@@ -40,7 +40,7 @@ namespace LanParty.Web.Controllers
                 menuItems.Add(
                     new DefaultLayoutViewModel.UserDefinedMenuItem()
                     {
-                        Title = item.ContentType, // item.Title,
+                        Title = item.Title, // item.Title,
                         ContentType = item.ContentType
                     });
             }

@@ -7,8 +7,39 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
+
+
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .navbar {
+            background-color: #ff7920;
+            color: black;
+        }
+
+        .navbar-nav > li > a {
+            color: #fff !important;
+        }
+        hr {
+            border-color: #ff7920;
+        }
+        .btn {
+            background-color: #ff7920;
+            border-color: #ff6a00;
+            color: #fff;
+        }
+        .btn:hover {
+                background-color: #ff4903;
+                color: #fff;
+                border-color: #ff7920;
+        }
+
+    </style>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -16,18 +47,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("LAN-party", "Index", "Default", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("MarknadsLAN", "Index", "Default", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @{ Html.RenderAction("RenderMenu", "Default"); }
+                    @*@{ Html.RenderAction("RenderMenu", "Default"); }*@
 
-                    <li>@Html.ActionLink("About", "About", "Default")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Default")</li>
+                    <li>@Html.ActionLink("Information", "About", "Default")</li>
+                    <li>@Html.ActionLink("Kontakt", "Contact", "Default")</li>
 
                     @if (Request.IsAuthenticated && (User.IsInRole("User") || User.IsInRole("Crew") || User.IsInRole("Participant")))
                     {
-                        <li>@Html.ActionLink("Book", "Index", "Seats")</li>
+                        <li>@Html.ActionLink("Boka", "Index", "Seats")</li>
                     }
 
                     @if (Request.IsAuthenticated && User.IsInRole("Editor"))
@@ -41,6 +72,7 @@
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("New Lan", "Create", "Lans")</li>
                                 <li>@Html.ActionLink("Content", "Index", "ContentAdmin")</li>
+                                <li>@Html.ActionLink("Page", "Index", "ContentAdmin")</li>
                             </ul>
                         </li>
                     }
@@ -68,7 +100,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - <i>lanparty.nonsenz.nu</i></p>
+            <p>&copy; @DateTime.Now.Year - <i>MarknadsLAN2017</i></p>
         </footer>
     </div>
     @Scripts.Render("~/bundles/jquery")

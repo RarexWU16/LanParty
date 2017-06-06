@@ -3,4 +3,7 @@
 @foreach (var item in Model.UserDefinedMenuItems)
 {
     <li>@Html.ActionLink(item.Title, "Index", "Pages", new { contents = item.ContentType }, null)</li>
+  
+     @*<li> @Html.ActionLink(item.Title, "Pages", new { title = item.Title })</li>*@
+    //new { @Href = "pages/page/" + item.Title }
 }
