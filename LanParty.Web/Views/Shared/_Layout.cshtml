@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - LAN-party</title>
+    <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -17,27 +18,55 @@
         }
 
         .navbar {
-            background-color: #ff7920;
             color: black;
+            background: -webkit-linear-gradient(#ff7920, #cb5304);
+            background: -o-linear-gradient(#ff7920, #cb5304);
+            background: -moz-linear-gradient(#ff7920, #cb5304);
+            background: linear-gradient(#ff7920, #cb5304);
+            background-color: #ff7920;
+        }
+        .navbar-brand {
+            color: #fff!important;
+            font-family: 'Audiowide', cursive;
+        }
+        .navbar-inverse {
+            color: #fff!important;
         }
 
         .navbar-nav > li > a {
             color: #fff !important;
         }
+
         hr {
             border-color: #ff7920;
         }
+
         .btn {
             background-color: #ff7920;
+            background: -webkit-linear-gradient(#ff7920, #cb5304);
+            background: -o-linear-gradient(#ff7920, #cb5304);
+            background: -moz-linear-gradient(#ff7920, #cb5304);
+            background: linear-gradient(#ff7920, #cb5304);
             border-color: #ff6a00;
             color: #fff;
         }
-        .btn:hover {
-                background-color: #ff4903;
-                color: #fff;
-                border-color: #ff7920;
-        }
 
+            .btn:hover {
+                background-color: #ff4903;
+                color: #000;
+                border-color: #ff7920;
+            }
+
+            .btn:active {
+                background-color: #ff7920;
+                background: -webkit-linear-gradient(#cb5304, #ff7920);
+                background: -o-linear-gradient(#cb5304, #ff7920);
+                background: -moz-linear-gradient(#cb5304, #ff7920);
+                background: linear-gradient(#cb5304, #ff7920);
+            }
+            h1, h2, h3 {
+                font-family: 'Audiowide', cursive;
+            }
     </style>
     <div class="navbar navbar-inverse navbar-fixed-top" style="">
         <div class="container">
@@ -47,7 +76,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("MarknadsLAN", "Index", "Default", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("MarknadsLAN2017", "Index", "Default", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -98,8 +127,36 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
+        
         <footer>
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Features</h2>
+                    <p>
+                        Simple CRM gives you a powerful way to build dynamic websites that gives you
+                        full control over markup for enjoyable content management.
+                    </p>
+                    <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h2>Lorem Ipsum</h2>
+                    <p>
+                        Simple CRM gives you a powerful way to build dynamic websites that gives you
+                        full control over markup for enjoyable content management.
+                    </p>
+                    <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h2>@ViewBag.Title</h2>
+                    <p>
+                        Simple CRM gives you a powerful way to build dynamic websites that gives you
+                        full control over markup for enjoyable content management.
+                    </p>
+                    <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
+                </div>
+            </div>
+            <hr />
             <p>&copy; @DateTime.Now.Year - <i>MarknadsLAN2017</i></p>
         </footer>
     </div>
