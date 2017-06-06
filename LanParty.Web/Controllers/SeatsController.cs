@@ -51,9 +51,11 @@ namespace LanParty.Web.Controllers
             }
         }
         [Authorize(Roles = "Administrator")]
-        public ActionResult Unbook(Guid seatId)
+        public ActionResult Unbook(Guid seatId, Guid userId)
         {
             var unbook = db.Seats.Find(seatId);
+            var user = db.Users.Find(userId.ToString());
+            //var users = db.Users.Where(x => new Guid(x.Id) == userId).First();
 
             if (unbook == null)
             {
@@ -71,8 +73,8 @@ namespace LanParty.Web.Controllers
                 // TODO failzeEOrox
             }
 
-            return RedirectToAction("Index");
-
+            //return RedirectToAction("Index");
+            return RedirectToAction("ChangeRole", "UsersAdmin", new { userId = user.Id });
         }
 
         public ActionResult ConfirmBooking(Guid bookingId)

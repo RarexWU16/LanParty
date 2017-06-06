@@ -83,7 +83,7 @@ namespace LanParty.Web.Controllers
                 }
 
                 try
-                {
+                {//TODO Fixa så att det går att ändra rollen till user.. typ demote till user
                     // Change role in db.
                     var resultRemoveFromRole = await UserManager.RemoveFromRoleAsync(userId, "User");
                     var resultAddToRole = await UserManager.AddToRolesAsync(userId, "Participant");

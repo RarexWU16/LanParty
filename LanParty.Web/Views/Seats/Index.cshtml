@@ -50,18 +50,19 @@
                 </td>*@
             <td>
                 @{
-                    if (item.Reserved != true && User.IsInRole("User"))
+                    
+                    if ((item.Reserved == false) && User.IsInRole("User"))
                     {
                         @Html.ActionLink("Book", "Book", "Seats", new { seatId = item.Id }, null);
                     }
-                    if (item.Reserved && User.IsInRole("Participant") && !User.IsInRole("Administrator") && item.UserId == User.Identity.GetUserId())
+                    if (item.Reserved && User.IsInRole("Participant") && !User.IsInRole("Administrator")) //&& item.UserId == User.Identity.GetUserId()
                     {
                         @Html.ActionLink("Request unbook", "Book", "Seats", new { seatId = item.Id }, null);
                     }
 
                     if (Request.IsAuthenticated && User.IsInRole("Administrator") && item.Reserved)
                     {
-                        @Html.ActionLink("Unbook", "Unbook", "Seats", new { seatId = item.Id }, null);
+                        @Html.ActionLink("Unbook", "Unbook", "Seats", new { seatId = item.Id, userId = item.UserId }, null);
                     }
 
                 }
