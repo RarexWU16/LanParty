@@ -1,2 +1,6 @@
 .vs/config/applicationhost.config
 *.suo
+LanParty.Web/bin/LanParty.Web.dll
+LanParty.Web/bin/LanParty.Web.pdb
+LanParty.Web/obj/Debug/LanParty.Web.pdb
+*.dll
