@@ -64,6 +64,53 @@ namespace LanParty.Web.Controllers
             return View(await UserManager.Users.ToListAsync());
         }
 
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult> DemoteToUser(string userId)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByIdAsync(userId);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+
+                try
+                {
+                    // Change role in db.
+                    var resultRemoveFromRole = await UserManager.RemoveFromRoleAsync(userId, "Participant");
+                    //var resultRemoveFromRoles = await UserManager.RemoveFromRolesAsync(userId, "Participant", "Editor", "Administrator"); // TODO Maybe add this
+                    var resultAddToRole = await UserManager.AddToRolesAsync(userId, "User");
+                    var resultUpdate = await UserManager.UpdateAsync(user);
+
+                    //Move to error
+                    if (!resultRemoveFromRole.Succeeded || !resultAddToRole.Succeeded || !resultUpdate.Succeeded) // TODO
+                    {
+                        return RedirectToAction("Index", "Seats"); // TODO
+                    }
+
+
+                    // Change cookie.
+                    var identity = new ClaimsIdentity(User.Identity);
+                    identity.RemoveClaim(identity.FindFirst(identity.RoleClaimType));
+                    identity.AddClaim(new Claim(identity.RoleClaimType, "Participant"));
+
+                    IOwinContext context = Request.GetOwinContext();
+                    var authenticationContext = await context.Authentication.AuthenticateAsync(DefaultAuthenticationTypes.ApplicationCookie);
+
+                    if (authenticationContext != null)
+                    {
+                        context.Authentication.AuthenticationResponseGrant = new AuthenticationResponseGrant(
+                            identity,
+                            authenticationContext.Properties);
+                    }
+                }
+                catch (Exception) { }
+
+            }
+            return RedirectToAction("Index", "Seats");    
+    }
+
         // Change User to Participant
         [Authorize(Roles = "User")]
         public async Task<ActionResult> ChangeRole(string userId)
@@ -89,6 +136,7 @@ namespace LanParty.Web.Controllers
                     var resultAddToRole = await UserManager.AddToRolesAsync(userId, "Participant");
                     var resultUpdate = await UserManager.UpdateAsync(user);
 
+                    //Move to error
                     if (!resultRemoveFromRole.Succeeded || !resultAddToRole.Succeeded || !resultUpdate.Succeeded) // TODO
                     {
                         return RedirectToAction("Index", "Seats"); // TODO

@@ -74,7 +74,7 @@ namespace LanParty.Web.Controllers
             }
 
             //return RedirectToAction("Index");
-            return RedirectToAction("ChangeRole", "UsersAdmin", new { userId = user.Id });
+            return RedirectToAction("DemoteToUser", "UsersAdmin", new { userId = userId.ToString() });
         }
 
         public ActionResult ConfirmBooking(Guid bookingId)
