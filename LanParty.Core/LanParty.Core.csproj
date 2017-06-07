@@ -104,6 +104,14 @@
     <Compile Include="Migrations\201705201624205_Initial_setup.Designer.cs">
       <DependentUpon>201705201624205_Initial_setup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706071444593_Seats_Update.cs" />
+    <Compile Include="Migrations\201706071444593_Seats_Update.Designer.cs">
+      <DependentUpon>201706071444593_Seats_Update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706071448231_Fix.cs" />
+    <Compile Include="Migrations\201706071448231_Fix.Designer.cs">
+      <DependentUpon>201706071448231_Fix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -117,6 +125,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705201624205_Initial_setup.resx">
       <DependentUpon>201705201624205_Initial_setup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706071444593_Seats_Update.resx">
+      <DependentUpon>201706071444593_Seats_Update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706071448231_Fix.resx">
+      <DependentUpon>201706071448231_Fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -58,3 +58,5 @@ C:\Users\Rarex\Desktop\LanPartyGit\LanParty\LanParty.Core\obj\Debug\LanParty.Cor
 C:\Users\Rarex\Desktop\LanPartyGit\LanParty\LanParty.Core\obj\Debug\LanParty.Core.csproj.GenerateResource.Cache
 C:\Users\Rarex\Desktop\LanPartyGit\LanParty\LanParty.Core\obj\Debug\LanParty.Core.dll
 C:\Users\Rarex\Desktop\LanPartyGit\LanParty\LanParty.Core\obj\Debug\LanParty.Core.pdb
+C:\Users\Rarex\Desktop\LanPartyGit\LanParty\LanParty.Core\obj\Debug\LanParty.Core.Migrations.Seats_Update.resources
+C:\Users\Rarex\Desktop\LanPartyGit\LanParty\LanParty.Core\obj\Debug\LanParty.Core.Migrations.Fix.resources

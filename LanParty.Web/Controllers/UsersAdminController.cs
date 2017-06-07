@@ -83,7 +83,7 @@ namespace LanParty.Web.Controllers
                     var resultAddToRole = await UserManager.AddToRolesAsync(userId, "User");
                     var resultUpdate = await UserManager.UpdateAsync(user);
 
-                    //Move to error
+                    //Move to errorpage
                     if (!resultRemoveFromRole.Succeeded || !resultAddToRole.Succeeded || !resultUpdate.Succeeded) // TODO
                     {
                         return RedirectToAction("Index", "Seats"); // TODO
