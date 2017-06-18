@@ -11,6 +11,7 @@ using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Newtonsoft.Json.Serialization;
+using LanParty.Web.Models;
 
 namespace LanParty.Web.Controllers
 {
@@ -111,6 +112,7 @@ namespace LanParty.Web.Controllers
         }
 
         // GET: Seats
+        [Authorize(Roles = "Administratorm, User, Crew")]
         public ActionResult Index()
         {
 
@@ -121,8 +123,6 @@ namespace LanParty.Web.Controllers
 
             return View(db.Seats.ToList());
         }
-
-
 
         // GET: Seats/Details/5
         public ActionResult Details(Guid? id)
@@ -140,17 +140,18 @@ namespace LanParty.Web.Controllers
         }
 
         // GET: Seats/Create
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Seats/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Position,PositionX,PositionY")] Seat seat)
+        [Authorize(Roles = "Administrator")]
+        public ActionResult Create([Bind(Include = "Id,Position,PositionX,PositionY,Width,Height,Rotation")] Seat seat)
         {
             if (ModelState.IsValid)
             {
@@ -164,6 +165,7 @@ namespace LanParty.Web.Controllers
         }
 
         // GET: Seats/Edit/5
+        [Authorize(Roles = "Administrator")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -179,19 +181,29 @@ namespace LanParty.Web.Controllers
         }
 
         // POST: Seats/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Position,PositionX,PositionY")] Seat seat)
+        [Authorize(Roles = "Administrator")]
+        public ActionResult Edit([Bind(Include = "Id,Position,PositionX,PositionY,Width,Height,Rotation")] Seat model)
         {
             if (ModelState.IsValid)
             {
+                var seat = db.Seats.FirstOrDefault(x => x.Id == model.Id);
+
+                if (seat == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                seat.Position = model.Position;
+                seat.PositionX = model.PositionX;
+                seat.PositionY = model.PositionY;
+                seat.Rotation = model.Rotation;
+
                 db.Entry(seat).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(seat);
+
+            return View(model);
         }
 
         // GET: Seats/Delete/5
@@ -218,6 +230,22 @@ namespace LanParty.Web.Controllers
             db.Seats.Remove(seat);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult GetBoxes()
+        {
+            var boxes = db.Seats.Where(x => x.Reserved != true).Select(x => new BoxViewModel()
+            {
+                Id = x.Id,
+                X = x.PositionX,
+                Y = x.PositionY,
+                Width = x.Width,
+                Height = x.Height,
+                Rotation = x.Rotation
+            });
+
+            return Json(boxes, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

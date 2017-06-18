@@ -4,58 +4,142 @@
     ViewBag.Title = "Add seat";
 }
 
-<h2>Add seat</h2>
+@section Styles {
+    <link href="~/Content/roundslider.css" rel="stylesheet" />
+    <style>
+        #BoxEditor input {
+            max-width: none;
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+        }
 
-    <div class="form-horizontal">
-        <h4>Seat</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Position, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        #BoxEditor .form-group {
+            padding-right: 10px;
+        }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PositionX, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PositionX, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PositionX, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        .box {
+            position: absolute;
+            display: block;
+        }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PositionY, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PositionY, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PositionY, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        #boxEditor-rotation {
+            margin: 0 auto;
+        }
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+        .rs-control {
+            margin: 0 auto;
+            border: 0;
+        }
 
-    <canvas id="canvas" width="250" height="600" style="background-color: green;">
-        <!-- Insert fallback content here -->
-        Sorry, your browser doesn't support canvas technology
-    </canvas>
+        .rs-border {
+            /*border: 1px solid #cb5304;*/
+            border: 0;
+        }
+
+        .rs-control .rs-range-color {
+            background-color: #000;
+        }
+
+        .rs-control .rs-path-color {
+            background-color: #ff7920;
+        }
+
+        .rs-control .rs-bg-color {
+            background-color: #000;
+        }
+    </style>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<h2>Add seat</h2>
+
+<div id="BoxEditor" class="Page row">
+    <div class="form-horizontal col-lg-4">
+        <div class="form-group">
+            <label for="boxEditor-position" class="control-label">Seat</label>
+            <input id="boxEditor-position" name="boxEditor-position" type="text" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label for="boxEditor-x" class="control-label">X</label>
+            <div class="input-group">
+                <input id="boxEditor-x" name="boxEditor-x" type="number" class="form-control" />
+                <span class="input-group-addon">px</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="boxEditor-y" class="control-label">Y</label>
+            <div class="input-group">
+                <input id="boxEditor-y" name="boxEditor-y" type="number" class="form-control" />
+                <span class="input-group-addon">px</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="boxEditor-width" class="control-label">Bredd</label>
+            <div class="input-group">
+                <input id="boxEditor-width" name="boxEditor-width" type="number" class="form-control" />
+                <span class="input-group-addon">px</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="boxEditor-height" class="control-label">Höjd</label>
+            <div class="input-group">
+                <input id="boxEditor-height" name="boxEditor-height" type="number" class="form-control" />
+                <span class="input-group-addon">px</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="boxEditor-rotation" class="control-label">Rotation i grader</label>
+            <input id="boxEditor-rotation" name="boxEditor-rotation" type="number" />
+        </div>
+        <div class="well well-sm" style="margin-top: 20px; background-color: #000; border: 0;">
+            <button class="btn btn-success SaveBox">Spara</button>
+            <a href="/Seats/Index" class="btn btn-warning pull-right">Tillbaka</a>
+            @*@Html.ActionLink("Index", "Seats", null, new { @class="", Text="Tillbaka" })*@
+        </div>
+    </div>
+    <div class="form-group col-lg-8">
+        <label class="control-label">Vånings bild</label>
+        <div id="boxEditorImageWrapper">
+            <img src="" class="FloorImage img-responsive" />
+            <div class="box"></div>
+        </div>
+    </div>
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("/Scripts/map.js")
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/roundslider.js"></script>
+    <script src="~/Scripts/map/boxEditor.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            boxEditor({
+                saveCallback: function (box) {
+                    console.log(box);
+                    $.ajax({
+                        url: "/Seats/Create",
+                        method: "POST",
+                        data: JSON.stringify({
+                            Position: $("#boxEditor-position").val(),
+                            PositionX: box.x,
+                            PositionY: box.y,
+                            Width: box.width,
+                            Height: box.height,
+                            Rotation: box.rotation
+                        }),
+                        contentType: "application/json",
+                        success: () => {
+                            window.location.href = "/Seats/Index";
+                        }
+                    })
+                },
+                imageUrl: "/content/images/planlosning2.jpg",
+                color: "#00CC00"
+            });
+        });
+
+    </script>
+    @*@Scripts.Render("/Scripts/map.js")*@
 }

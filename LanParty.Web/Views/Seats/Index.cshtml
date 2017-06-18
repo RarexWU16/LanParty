@@ -8,72 +8,172 @@
 <h2>Platser</h2>
 @if (Request.IsAuthenticated && (User.IsInRole("Crew") || User.IsInRole("Administrator")))
 {
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-}
+    <text>
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Position)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PositionX)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PositionY)
-        </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.Reserved)
-            </th>*@
-        <th></th>
-        <th></th>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Position)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PositionX)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PositionY)
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
 
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PositionX)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PositionY)
+                    </td>
+                    <td>
+                        @{
 
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Position)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PositionX)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PositionY)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.Reserved)
-                </td>*@
-            <td>
-                @{
-                    
-                    if ((item.Reserved == false) && User.IsInRole("User"))
-                    {
-                        @Html.ActionLink("Book", "Book", "Seats", new { seatId = item.Id }, null);
+                            if ((item.Reserved == false) && User.IsInRole("User"))
+                            {
+                                @Html.ActionLink("Book", "Book", "Seats", new { seatId = item.Id }, null);
                     }
                     if (item.Reserved && User.IsInRole("Participant") && !User.IsInRole("Administrator")) //&& item.UserId == User.Identity.GetUserId()
                     {
-                        @Html.ActionLink("Request unbook", "Book", "Seats", new { seatId = item.Id }, null);
+                                @Html.ActionLink("Request unbook", "Book", "Seats", new { seatId = item.Id }, null);
                     }
 
                     if (Request.IsAuthenticated && User.IsInRole("Administrator") && item.Reserved)
                     {
-                        @Html.ActionLink("Unbook", "Unbook", "Seats", new { seatId = item.Id, userId = item.UserId }, null);
+                                @Html.ActionLink("Unbook", "Unbook", "Seats", new { seatId = item.Id, userId = item.UserId }, null);
                     }
 
-                }
-            </td>
-            <td>
-                @if (item.Reserved && Request.IsAuthenticated && User.IsInRole("Administrator"))
-                {
-                    @Html.ActionLink(item.UserId, "Details", "UsersAdmin", new { id = item.UserId }, null)
-                }
-            </td>
-        </tr>
-                    }
+                        }
+                    </td>
+                    <td>
+                        @if (item.Reserved && Request.IsAuthenticated && User.IsInRole("Administrator"))
+                    {
+                            @Html.ActionLink(item.UserId, "Details", "UsersAdmin", new { id = item.UserId }, null)
+                        }
+                    </td>
+                    <td>
+                        @if (Request.IsAuthenticated && User.IsInRole("Administrator"))
+                    {
+                            @Html.ActionLink("Edit", "Edit", "Seats", new { id = item.Id }, null)
+                        }
+                    </td>
+                </tr>
+                            }
+        </table>
+    </text>
+                            }
+                            else
+                            {
+                                @section Styles {
+                                    <style>
+                                        .modal p {
+                                            font-size: 1.3em;
+                                        }
 
-</table>
+                                        #controlMenu {
+                                            position: absolute;
+                                            top: 5px;
+                                            left: 5px;
+                                            width: 200px;
+                                            font-family: 'Jockey One';
+                                        }
+
+                                            #controlMenu select {
+                                                margin-bottom: 5px;
+                                            }
+
+                                            #controlMenu button {
+                                                width: 48%;
+                                            }
+
+                                        /*#controlMenu button:focus {
+                                                    background-color: #fff;
+                                                    outline: 0;
+                                                }*/
+
+
+                                        #infoButton {
+                                            position: absolute;
+                                            top: 5px;
+                                            right: 5px;
+                                            padding: 0;
+                                            width: 50px;
+                                            height: 50px;
+                                            line-height: 25px;
+                                            border-radius: 50%;
+                                            font-size: 20px;
+                                            text-align: center;
+                                        }
+
+                                            #infoButton:focus {
+                                                background-color: #fff;
+                                                outline: 0;
+                                            }
+
+
+                                        #infoModal .row {
+                                            height: 30px;
+                                            font-size: 20px;
+                                            line-height: 30px;
+                                            margin-bottom: 10px;
+                                        }
+
+                                            #infoModal .row h4 {
+                                                margin: 0;
+                                                padding: 0;
+                                                line-height: 30px;
+                                            }
+
+                                        .colorSquare {
+                                            display: block;
+                                            height: 100%;
+                                        }
+                                    </style>
+                                }
+
+                                <div style="max-width: 85%;position:relative;border:1px solid #ff7920; margin:0 auto;">
+                                    <div id="controlMenu">
+                                        <button class="btn btn-default pull-left" id="zoomIn">
+                                            <i class="glyphicon glyphicon-zoom-in"></i>
+                                        </button>
+                                        <button class="btn btn-default pull-right" id="zoomOut">
+                                            <i class="glyphicon glyphicon-zoom-out"></i>
+                                        </button>
+                                    </div>
+
+                                    <div style="height:500px;width:100%;" id="map-Wrapper"></div>
+                                </div>
+
+
+                                @section Scripts {
+                                    <script src="~/Scripts/phaser.min.js"></script>
+                                    <script src="~/Scripts/map/main.js"></script>
+
+                                    <script>
+                                        $(document).ready(function () {
+                                            $.ajax({
+                                                url: "/Seats/GetBoxes",
+                                                method: "GET",
+                                                success: (result) => map(result)
+                                            });
+                                        });
+                                    </script>
+                                }
+                            }
+
+
