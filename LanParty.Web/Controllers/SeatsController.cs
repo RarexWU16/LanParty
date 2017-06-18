@@ -112,7 +112,7 @@ namespace LanParty.Web.Controllers
         }
 
         // GET: Seats
-        [Authorize(Roles = "Administratorm, User, Crew")]
+        [Authorize]
         public ActionResult Index()
         {
 
@@ -238,6 +238,7 @@ namespace LanParty.Web.Controllers
             var boxes = db.Seats.Where(x => x.Reserved != true).Select(x => new BoxViewModel()
             {
                 Id = x.Id,
+                Position = x.Position,
                 X = x.PositionX,
                 Y = x.PositionY,
                 Width = x.Width,

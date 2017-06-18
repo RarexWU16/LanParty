@@ -1,5 +1,4 @@
 ﻿
-
 (function () {
     $(document).ready(function () {
         $("#zoomOut").on("click", app.zoomOut);
@@ -89,8 +88,6 @@
 
             app.currentLevel.sprite.scale.setTo(app.scale, app.scale);
 
-
-
             $(app.boxes).each(function (i, box) {
                 var width = box.Width * app.scale;
                 var height = box.Height * app.scale;
@@ -109,9 +106,19 @@
                     bmd
                 );
 
+                var style = { font: "12px", fill: "#000" };
+
+                var text = app.phaser.add.text(
+                    parseInt(app.currentLevel.sprite.x + (box.X * app.scale)),
+                    parseInt(app.currentLevel.sprite.y + (box.Y * app.scale)),
+                    box.Position,
+                    style
+                );
+                text.anchor.set(0.5, 0.5);
+
                 sprite.inputEnabled = true;
                 sprite.anchor.setTo(0.5, 0.5);
-                sprite.angle = box.rotation;
+                sprite.angle = box.Rotation;
 
                 sprite.events.onInputOver.add(() => {
                     cursors.pointer();
@@ -147,9 +154,10 @@
     window.map = app.init;
 })();
 
-// load data to localStorage
-
-
-
-
-// Main app
+$(document).ready(function () {
+    $.ajax({
+        url: "/Seats/GetBoxes",
+        method: "GET",
+        success: (result) => map(result)
+    });
+});
