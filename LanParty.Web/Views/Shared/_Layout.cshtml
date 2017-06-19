@@ -7,6 +7,8 @@
     <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    @RenderSection("Styles", false)
 </head>
 
 <body>
@@ -202,7 +204,7 @@
                 }
             }
             function slideshowFadeIn() {
-                $('.slideshow').prepend($('<img class="slideshowimage img-responsive" src="' + 
+                $('.slideshow').prepend($('<img class="slideshowimage img-responsive" src="' +
                     images[randomImage(images.length)] + '" style="display:none">').fadeIn(1500, function () {
                         setTimeout(doSlideshow, 1500);
                     }));
@@ -214,7 +216,7 @@
                     var min = 0;
                     return Math.floor(Math.random() * (imagesLength - min) + min);
                 }
-                    
+
             }
             doSlideshow();
         });

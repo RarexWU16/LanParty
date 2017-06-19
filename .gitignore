@@ -48,10 +48,10 @@ LanParty.Web/obj/Debug/Package/PackageTmp/Content/bootstrap.min.css.map
 LanParty.Web/obj/Debug/Package/PackageTmp/Content/Images/Logos/smal.jpg
 LanParty.Web/obj/Debug/Package/PackageTmp/Content/Images/piccontainer3.jpg
 LanParty.Web/obj/Debug/Package/PackageTmp/favicon.ico
-LanParty.Web/obj
-LanParty.Core/obj
-LanParty.Web/bin
-LanParty.Core/bin
+LanParty.Web/obj/
+LanParty.Core/obj/
+LanParty.Web/bin/
+LanParty.Core/bin/
 LanParty.Core/obj/Debug/LanParty.Core.csproj.FileListAbsolute.txt
 LanParty.Web/Properties/PublishProfiles/Amazon.pubxml
 LanParty.Web/obj/Debug/LanParty.Web.pdb
@@ -61,3 +61,8 @@ LanParty.Core/bin/Debug/LanParty.Core.dll
 LanParty.Core/obj/Debug/LanParty.Core.csproj.FileListAbsolute.txt
 LanParty.Web/bin/LanParty.Web.dll.config
 .vs/config/applicationhost.config
+LanParty.Web/LanParty.Web.csproj
+LanParty.Core/obj/Debug/LanParty.Core.csproj.FileListAbsolute.txt
+LanParty.Web/obj/Debug/LanParty.Web.dll
+.vs/config/applicationhost.config
+LanParty.Web/LanParty.Web.csproj

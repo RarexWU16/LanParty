@@ -12,8 +12,8 @@ namespace LanParty.Core.Domain
         public Guid Id { get; set; }
         [Display(Name = "Plats")]
         public string Position { get; set; }
-        public string PositionX { get; set; }
-        public string PositionY { get; set; }
+        public int PositionX { get; set; }
+        public int PositionY { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public int Rotation { get; set; }

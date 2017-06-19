@@ -11,50 +11,43 @@
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
-}
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Position)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PositionX)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PositionY)
-        </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.Reserved)
-            </th>*@
-        <th></th>
-        <th></th>
-
-
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Position)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PositionX)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PositionY)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.Reserved)
-                </td>*@
-            <td>
-                @{
-                    
-                    if ((item.Reserved == false) && User.IsInRole("User"))
-                    {
-                        @Html.ActionLink("Book", "Book", "Seats", new { seatId = item.Id }, null);
-                    }
+            <th>
+                @Html.DisplayNameFor(model => model.Position)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PositionX)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PositionY)
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PositionX)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PositionY)
+                </td>
+                <td>
+                    @{
+                        @*if ((item.Reserved == false) && User.IsInRole("User"))
+                            {
+                                @Html.ActionLink("Book", "Book", "Seats", new { seatId = item.Id }, null);
+                            }*@
+
                     if (item.Reserved && User.IsInRole("Participant") && !User.IsInRole("Administrator")) //&& item.UserId == User.Identity.GetUserId()
                     {
                         @Html.ActionLink("Request unbook", "Book", "Seats", new { seatId = item.Id }, null);
@@ -63,17 +56,57 @@
                     if (Request.IsAuthenticated && User.IsInRole("Administrator") && item.Reserved)
                     {
                         @Html.ActionLink("Unbook", "Unbook", "Seats", new { seatId = item.Id, userId = item.UserId }, null);
+                        }
                     }
-
-                }
-            </td>
-            <td>
-                @if (item.Reserved && Request.IsAuthenticated && User.IsInRole("Administrator"))
-                {
-                    @Html.ActionLink(item.UserId, "Details", "UsersAdmin", new { id = item.UserId }, null)
-                }
-            </td>
-        </tr>
+                </td>
+                <td>
+                    @if (item.Reserved == true)
+                    {
+                        @Html.ActionLink(item.UserId, "Details", "UsersAdmin", new { id = item.UserId }, null)
                     }
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Seats", new { id = item.Id }, null)
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", "Seats", new { id = item.Id }, null)
+                </td>
+            </tr>
+                        }
+    </table>
+                        }
 
-</table>
+@if (Request.IsAuthenticated && User.IsInRole("User"))
+{
+    <div style="max-width: 85%; position: relative; border: 1px solid #ff7920; margin: 0 auto;">
+        <div id="controlMenu">
+            <button class="btn btn-default pull-left" id="zoomIn">
+                <i class="glyphicon glyphicon-zoom-in"></i>
+            </button>
+            <button class="btn btn-default pull-right" id="zoomOut">
+                <i class="glyphicon glyphicon-zoom-out"></i>
+            </button>
+        </div>
+        <div style="height:500px;width:100%;" id="map-Wrapper"></div>
+    </div>
+
+    @section Styles {
+        <link href="~/Content/map.css" rel="stylesheet" />
+    }
+
+    @section Scripts {
+        <script src="~/Scripts/phaser.min.js"></script>
+        <script src="~/Scripts/map/main.js"></script>
+    }
+}
+
+@if (Request.IsAuthenticated && User.IsInRole("Participant"))
+{
+    foreach (var item in Model)
+    {
+        if (item.Reserved == true && item.UserId == User.Identity.GetUserId())
+        {
+            @Html.ActionLink("Request unbook", "Book", "Seats", new { seatId = item.Id }, null)
+        }
+    }
+}
