@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using LanParty.Core.Domain;
 using LanParty.Web.Models;
+using System.Configuration;
 
 namespace LanParty.Web.Controllers
 {
@@ -12,6 +13,8 @@ namespace LanParty.Web.Controllers
     {
         public ActionResult Index()
         {
+            //ViewBag.connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            //return View(ViewBag);
             return View();
         }
 

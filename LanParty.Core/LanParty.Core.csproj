@@ -80,6 +80,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -96,6 +97,7 @@
     <Compile Include="Domain\Booking.cs" />
     <Compile Include="Domain\Seat.cs" />
     <Compile Include="Domain\Site.cs" />
+    <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Migrations\201610191812264_InitialCreate.cs" />
     <Compile Include="Migrations\201610191812264_InitialCreate.Designer.cs">
       <DependentUpon>201610191812264_InitialCreate.cs</DependentUpon>
