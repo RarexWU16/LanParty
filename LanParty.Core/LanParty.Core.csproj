@@ -114,6 +114,26 @@
     <Compile Include="Migrations\201706071448231_Fix.Designer.cs">
       <DependentUpon>201706071448231_Fix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706170941405_Fix2.cs" />
+    <Compile Include="Migrations\201706170941405_Fix2.Designer.cs">
+      <DependentUpon>201706170941405_Fix2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706181434549_Changed_PositionX_And_PositionY_To_Int.cs" />
+    <Compile Include="Migrations\201706181434549_Changed_PositionX_And_PositionY_To_Int.Designer.cs">
+      <DependentUpon>201706181434549_Changed_PositionX_And_PositionY_To_Int.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706202228437_Added_Property_To_Booking.cs" />
+    <Compile Include="Migrations\201706202228437_Added_Property_To_Booking.Designer.cs">
+      <DependentUpon>201706202228437_Added_Property_To_Booking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706202249184_Moved_Property_From_Booking_To_Seat.cs" />
+    <Compile Include="Migrations\201706202249184_Moved_Property_From_Booking_To_Seat.Designer.cs">
+      <DependentUpon>201706202249184_Moved_Property_From_Booking_To_Seat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706210145333_Maybe.cs" />
+    <Compile Include="Migrations\201706210145333_Maybe.Designer.cs">
+      <DependentUpon>201706210145333_Maybe.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -133,6 +153,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706071448231_Fix.resx">
       <DependentUpon>201706071448231_Fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706170941405_Fix2.resx">
+      <DependentUpon>201706170941405_Fix2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706181434549_Changed_PositionX_And_PositionY_To_Int.resx">
+      <DependentUpon>201706181434549_Changed_PositionX_And_PositionY_To_Int.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706202228437_Added_Property_To_Booking.resx">
+      <DependentUpon>201706202228437_Added_Property_To_Booking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706202249184_Moved_Property_From_Booking_To_Seat.resx">
+      <DependentUpon>201706202249184_Moved_Property_From_Booking_To_Seat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706210145333_Maybe.resx">
+      <DependentUpon>201706210145333_Maybe.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

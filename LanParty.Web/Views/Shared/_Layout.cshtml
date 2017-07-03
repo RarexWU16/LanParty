@@ -103,7 +103,7 @@
                     <li>@Html.ActionLink("Sponsorer", "Sponsors", "Default")</li>
                     <li>@Html.ActionLink("Turneringar", "Tournaments", "Default")</li>
 
-                    @if (Request.IsAuthenticated && (User.IsInRole("User") || User.IsInRole("Crew") || User.IsInRole("Participant")))
+                    @if (Request.IsAuthenticated && (User.IsInRole("User") || User.IsInRole("Administrator") || User.IsInRole("Participant")))
                     {
                         <li>@Html.ActionLink("Boka", "Index", "Seats")</li>
                     }

@@ -6,7 +6,7 @@
 }
 
 <h2>Platser</h2>
-@if (Request.IsAuthenticated && (User.IsInRole("Crew") || User.IsInRole("Administrator")))
+@if (Request.IsAuthenticated && User.IsInRole("Administrator"))
 {
     <p>
         @Html.ActionLink("Create New", "Create")
@@ -55,7 +55,15 @@
 
                     if (Request.IsAuthenticated && User.IsInRole("Administrator") && item.Reserved)
                     {
-                        @Html.ActionLink("Unbook", "Unbook", "Seats", new { seatId = item.Id, userId = item.UserId }, null);
+                        if (item.RequestedUnbook)
+                        {
+                            @Html.ActionLink("Begärd avbokan", "Unbook", "Seats", new { seatId = item.Id, userId = item.UserId }, null);
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Avboka", "Unbook", "Seats", new { seatId = item.Id, userId = item.UserId }, null);
+                            }
+
                         }
                     }
                 </td>
@@ -76,11 +84,21 @@
     </table>
                         }
 
+<style>
+    .map-container {
+        position: relative;
+        border: 1px solid #ff7920;
+        margin: 0 auto;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+    }
+</style>
+
 @if (Request.IsAuthenticated && User.IsInRole("User"))
 {
-    <div style="max-width: 85%; position: relative; border: 1px solid #ff7920; margin: 0 auto;">
+    <div class="map-container">
         <div id="controlMenu">
-            <button class="btn btn-default pull-left" id="zoomIn">
+            <button class="btn btn-default" id="zoomIn">
                 <i class="glyphicon glyphicon-zoom-in"></i>
             </button>
             <button class="btn btn-default pull-right" id="zoomOut">
@@ -90,9 +108,9 @@
         <div style="height:500px;width:100%;" id="map-Wrapper"></div>
     </div>
 
-    @section Styles {
-        <link href="~/Content/map.css" rel="stylesheet" />
-    }
+    @*@section Styles {
+            <link href="~/Content/map.css" rel="stylesheet" />
+        }*@
 
     @section Scripts {
         <script src="~/Scripts/phaser.min.js"></script>
@@ -100,13 +118,25 @@
     }
 }
 
-@if (Request.IsAuthenticated && User.IsInRole("Participant"))
+@if (Request.IsAuthenticated && User.IsInRole("Participant") && !User.IsInRole("Administrator") && !User.IsInRole("User"))
 {
-    foreach (var item in Model)
+    var userSeat = Model.FirstOrDefault(x => x.UserId == User.Identity.GetUserId());
+
+    if (userSeat == null)
     {
-        if (item.Reserved == true && item.UserId == User.Identity.GetUserId())
+        return;
+    }
+    <p>Du har plats: <span>@userSeat.Position</span></p>
+    if (userSeat.Reserved && userSeat.UserId == User.Identity.GetUserId())
+    {
+        if (!userSeat.RequestedUnbook)
         {
-            @Html.ActionLink("Request unbook", "Book", "Seats", new { seatId = item.Id }, null)
+            @Html.ActionLink("Begär avbokning", "Book", "Seats", new { seatId = userSeat.Id }, null)
+        }
+        else
+        {
+            <h3>Avbokning begärd.</h3>
+                <p>Ha förståelse för att det kan ta upp till 48 timmar innan en avbokning är genomförd.</p>
         }
     }
 }

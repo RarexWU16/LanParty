@@ -64,7 +64,7 @@ namespace LanParty.Web.Controllers
             return View(await UserManager.Users.ToListAsync());
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize]
         public async Task<ActionResult> DemoteToUser(string userId)
         {
             if (ModelState.IsValid)
@@ -90,26 +90,39 @@ namespace LanParty.Web.Controllers
                     }
 
 
-                    // Change cookie.
-                    var identity = new ClaimsIdentity(User.Identity);
-                    identity.RemoveClaim(identity.FindFirst(identity.RoleClaimType));
-                    identity.AddClaim(new Claim(identity.RoleClaimType, "Participant"));
-
-                    IOwinContext context = Request.GetOwinContext();
-                    var authenticationContext = await context.Authentication.AuthenticateAsync(DefaultAuthenticationTypes.ApplicationCookie);
-
-                    if (authenticationContext != null)
+                    if (!User.IsInRole("Administrator"))
                     {
-                        context.Authentication.AuthenticationResponseGrant = new AuthenticationResponseGrant(
-                            identity,
-                            authenticationContext.Properties);
+                        // Change cookie.
+                        var identity = new ClaimsIdentity(User.Identity);
+                        identity.RemoveClaim(identity.FindFirst(identity.RoleClaimType));
+                        identity.AddClaim(new Claim(identity.RoleClaimType, "User"));
+
+                        IOwinContext context = Request.GetOwinContext();
+                        var authenticationContext = await context.Authentication.AuthenticateAsync(DefaultAuthenticationTypes.ApplicationCookie);
+
+                        if (authenticationContext != null)
+                        {
+                            context.Authentication.AuthenticationResponseGrant = new AuthenticationResponseGrant(
+                                identity,
+                                authenticationContext.Properties);
+                        }
                     }
+                   await UserManager.UpdateSecurityStampAsync(userId);
+                    ////Get the authentication manager
+                    //var authenticationManager = HttpContext.GetOwinContext().Authentication;
+
+                    ////Log the user out
+                    //authenticationManager.SignOut();
+
+                    ////Log the user back in
+                    //var identityTemp = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+                    //authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, identityTemp);
                 }
                 catch (Exception) { }
 
             }
-            return RedirectToAction("Index", "Seats");    
-    }
+            return RedirectToAction("Index", "Seats");
+        }
 
         // Change User to Participant
         [Authorize(Roles = "User")]

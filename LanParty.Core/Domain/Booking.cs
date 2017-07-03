@@ -16,5 +16,6 @@ namespace LanParty.Core.Domain
         public virtual Seat Seat { get; set; }
         [Display(Name = "Bokningsdatum")]
         public DateTime BookingDate { get; set; }
+        
     }
 }

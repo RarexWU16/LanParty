@@ -1,4 +1,5 @@
-﻿@model IEnumerable<LanParty.Core.Domain.ApplicationRole>
+﻿@*@model IEnumerable<LanParty.Core.Domain.ApplicationRole>*@
+@model LanParty.Web.Models.RoleViewModel
 
 @{
     ViewBag.Title = "Användare";
@@ -9,7 +10,7 @@
 <p>
     @Html.ActionLink("Skapa ny", "Create")
 </p>
-<table class="table">
+<table>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -21,7 +22,7 @@
 
         </th>
     </tr>
-
+    @*Skrivs inte ut några roller här i vyn*@
     @foreach (var item in Model)
     {
         <tr>

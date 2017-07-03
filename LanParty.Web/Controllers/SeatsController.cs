@@ -27,8 +27,12 @@ namespace LanParty.Web.Controllers
                 var seat = db.Seats.Find(seatId);
                 var user = db.Users.Find(User.Identity.GetUserId());
 
-                if (seat == null || user == null || seat.Reserved)
+
+                if ((seat == null || user == null || seat.Reserved) && seat.RequestedUnbook == false)
                 {
+                    //Begär avbokning??
+                    seat.RequestedUnbook = true;
+                    db.SaveChanges();
                     return RedirectToAction("Index");
                 }
 
@@ -37,7 +41,7 @@ namespace LanParty.Web.Controllers
                     Id = Guid.NewGuid(),
                     Seat = db.Seats.Find(seatId),
                     UserId = User.Identity.GetUserId(),
-                    BookingDate = DateTime.Now
+                    BookingDate = DateTime.Now 
                 };
 
                 db.Bookings.Add(newBooking);
@@ -56,6 +60,7 @@ namespace LanParty.Web.Controllers
         {
             var unbook = db.Seats.Find(seatId);
             var user = db.Users.Find(userId.ToString());
+            var booking = db.Bookings.Where(x => x.UserId == userId.ToString()).FirstOrDefault();
             //var users = db.Users.Where(x => new Guid(x.Id) == userId).First();
 
             if (unbook == null)
@@ -63,9 +68,13 @@ namespace LanParty.Web.Controllers
                 return RedirectToAction("Index"); // TODO failzeEOrox
             }
             unbook.Reserved = false;
-
+            unbook.RequestedUnbook = false;
+            unbook.User = null;
+            unbook.UserId = null;
+     
             try
             {
+                db.Bookings.Remove(booking);
                 db.Entry(unbook).State = EntityState.Modified;
                 db.SaveChanges();
             }

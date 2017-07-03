@@ -77,16 +77,36 @@ namespace LanParty.Core.Migrations
                 {
                     Id = Guid.NewGuid().ToString(),
                     UserName = "me@danielboman.se",
-                    Email = "ester@tester.dev",
+                    Email = "me@danielboman.se",
                     FirstName = "Daniel",
                     LastName = "Boman",
                     Address = "Kulltorpsvägen 39",
                     City = "Bredaryd",
                     PostalCode = "33374"
-    };
+                };
 
                 manager.Create(user, "@Testatest1");
                 manager.AddToRole(user.Id, "Administrator");
+            }
+
+            if (!context.Users.Any(u => u.UserName == "user@user.se"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                var user = new ApplicationUser
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserName = "user@user.se",
+                    Email = "user@user.se",
+                    FirstName = "Daniel",
+                    LastName = "Boman",
+                    Address = "Kulltorpsvägen 39",
+                    City = "Bredaryd",
+                    PostalCode = "33374"
+                };
+
+                manager.Create(user, "@Testatest1");
+                manager.AddToRole(user.Id, "User");
             }
         }
     }

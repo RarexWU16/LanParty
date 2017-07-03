@@ -163,6 +163,7 @@ namespace LanParty.Web.Controllers
                     PostalCode = model.PostalCode
                 };
 
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 var setRoles = await UserManager.AddToRolesAsync(user.Id, "User");
 

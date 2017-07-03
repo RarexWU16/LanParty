@@ -20,5 +20,6 @@ namespace LanParty.Core.Domain
         public bool Reserved { get; set; }
         public ApplicationUser User { get; set; }
         public string UserId { get; set; }
+        public bool RequestedUnbook { get; set; }
     }
 }
